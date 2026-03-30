@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.football-data.org)",
+      "Bash(find /c/Users/sandi/Documents/Coding/scoreApp -type f -name *)",
+      "Bash(npm install:*)",
+      "Bash(node server.js)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3000)",
+      "Bash(taskkill /PID 45304 /F)",
+      "Bash(netlify deploy:*)"
+    ]
+  }
+}

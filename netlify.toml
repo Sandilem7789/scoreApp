@@ -1,0 +1,13 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/week"
+  to = "/.netlify/functions/week"
+  status = 200
+
+[[redirects]]
+  from = "/api/standings/:id"
+  to = "/.netlify/functions/standings?id=:id"
+  status = 200

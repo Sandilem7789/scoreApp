@@ -8,6 +8,6 @@
   status = 200
 
 [[redirects]]
-  from = "/api/standings/:id"
-  to = "/.netlify/functions/standings?id=:id"
+  from = "/api/standings/*"
+  to = "/.netlify/functions/standings"
   status = 200

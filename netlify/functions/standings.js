@@ -1,8 +1,9 @@
 const BASE_URL = 'https://api.football-data.org/v4';
 
 exports.handler = async (event) => {
-  const id = event.queryStringParameters && event.queryStringParameters.id;
-  if (!id) {
+  const pathParts = (event.path || '').split('/');
+  const id = pathParts[pathParts.length - 1];
+  if (!id || id === 'standings') {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing competition id' }) };
   }
 

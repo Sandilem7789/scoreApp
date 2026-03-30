@@ -195,8 +195,10 @@ function renderDay(dateStr, byComp, standingsMap) {
 
 async function fetchJSON(url) {
   const res = await fetch(url);
+  const data = await res.json();
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
 }
 
 async function fetchAllStandings(competitionIds) {

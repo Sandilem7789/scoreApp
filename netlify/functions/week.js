@@ -11,19 +11,35 @@ exports.handler = async () => {
   const from = monday.toISOString().slice(0, 10);
   const to   = sunday.toISOString().slice(0, 10);
 
+  if (!process.env.API_KEY) {
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'API_KEY environment variable is not set' })
+    };
+  }
+
   try {
     const res = await fetch(`${BASE_URL}/matches?dateFrom=${from}&dateTo=${to}`, {
       headers: { 'X-Auth-Token': process.env.API_KEY }
     });
     const data = await res.json();
+    if (!res.ok) {
+      return {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: `football-data.org error ${res.status}: ${data.message || JSON.stringify(data)}` })
+      };
+    }
     return {
-      statusCode: res.status,
+      statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     };
   } catch (err) {
     return {
-      statusCode: 500,
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: err.message })
     };
   }

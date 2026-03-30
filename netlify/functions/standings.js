@@ -11,14 +11,22 @@ exports.handler = async (event) => {
       headers: { 'X-Auth-Token': process.env.API_KEY }
     });
     const data = await res.json();
+    if (!res.ok) {
+      return {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: `football-data.org error ${res.status}: ${data.message || JSON.stringify(data)}` })
+      };
+    }
     return {
-      statusCode: res.status,
+      statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     };
   } catch (err) {
     return {
-      statusCode: 500,
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: err.message })
     };
   }
